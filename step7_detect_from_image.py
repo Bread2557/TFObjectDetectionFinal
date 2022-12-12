@@ -19,7 +19,7 @@ detection_model = model_builder.build(model_config=configs['model'], is_training
 
 # Restore checkpoint
 ckpt = tf.compat.v2.train.Checkpoint(model=detection_model)
-ckpt.restore(os.path.join(paths['CHECKPOINT_PATH'], 'ckpt-4')).expect_partial()
+ckpt.restore(os.path.join(paths['CHECKPOINT_PATH'], 'ckpt-26')).expect_partial()
 
 @tf.function
 def detect_fn(image):
@@ -32,7 +32,21 @@ from step1_init_workspace import files, paths
 
 category_index = label_map_util.create_category_index_from_labelmap(files['LABELMAP'])
 
-for i in range(1, 14):
+img_to_detect_dir = 'imgs_model_testing'
+save_dir = 'imgs_detections'
+
+
+num_of_files = len(os.listdir(img_to_detect_dir)) + 1
+
+for p in (img_to_detect_dir, save_dir):
+    if not os.path.exists(p):
+        if os.name == 'posix':
+            os.system("mkdir -p " + p)
+        if os.name == 'nt':
+            os.system("mkdir " + p)
+
+
+for i in reversed(range(1, num_of_files)):
     print("---- Image {} ----".format(i))
     IMAGE_PATH = os.path.join('imgs_model_testing', '{}.jpg'.format(i))
 
@@ -64,10 +78,10 @@ for i in range(1, 14):
         category_index,
         use_normalized_coordinates=True,
         max_boxes_to_draw=5,
-        min_score_thresh=.1,
+        min_score_thresh=.4,
         agnostic_mode=False)
 
     print("Saving...")
     plt.imshow(cv2.cvtColor(image_np_with_detections, cv2.COLOR_BGR2RGB))
     # plt save fig high resolution
-    plt.savefig('H2test{}.png'.format(i), dpi=300, bbox_inches='tight')
+    plt.savefig(os.path.join(save_dir, 'detection_{}.png').format(i), dpi=300, bbox_inches='tight')
