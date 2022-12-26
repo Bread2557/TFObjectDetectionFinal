@@ -24,7 +24,8 @@ if not os.path.exists(LABELIMG_PATH):
     os.system("git clone https://github.com/tzutalin/labelImg " + LABELIMG_PATH)
 
 if os.name == 'posix':
-    os.system("make qt5py3")
+    os.system("brew install qt qt5") # Für mac evtl relevant
+    os.system("cd Tensorflow && cd labelimg && make qt5py3")
 if os.name =='nt':
     os.system("cd {LABELIMG_PATH} && pyrcc5 -o libs/resources.py resources.qrc".format(LABELIMG_PATH=LABELIMG_PATH))
 

@@ -1,9 +1,9 @@
 import os
 
 
-CUSTOM_MODEL_NAME = 'my_ssd_mobnet_640_v1'
-PRETRAINED_MODEL_NAME = 'ssd_resnet152_v1_fpn_1024x1024_coco17_tpu-8'
-PRETRAINED_MODEL_URL = 'http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_resnet152_v1_fpn_1024x1024_coco17_tpu-8.tar.gz'
+CUSTOM_MODEL_NAME = 'efficientdet_d2_coco17_tpu-32'
+PRETRAINED_MODEL_NAME = 'efficientdet_d2_coco17_tpu-32'
+PRETRAINED_MODEL_URL = 'http://download.tensorflow.org/models/object_detection/tf2/20200711/efficientdet_d2_coco17_tpu-32.tar.gz'
 TF_RECORD_SCRIPT_NAME = 'generate_tfrecord.py'
 LABEL_MAP_NAME = 'label_map.pbtxt'
 
@@ -19,7 +19,8 @@ paths = {
     'OUTPUT_PATH': os.path.join('Tensorflow', 'workspace','models',CUSTOM_MODEL_NAME, 'export'),
     'TFJS_PATH':os.path.join('Tensorflow', 'workspace','models',CUSTOM_MODEL_NAME, 'tfjsexport'),
     'TFLITE_PATH':os.path.join('Tensorflow', 'workspace','models',CUSTOM_MODEL_NAME, 'tfliteexport'),
-    'PROTOC_PATH':os.path.join('Tensorflow','protoc')
+    'PROTOC_PATH':os.path.join('Tensorflow', 'protoc'),
+    'BACKUP_PATH':os.path.join('F:', 'Backups', 'Tensorflow')
  }
 
 files = {
